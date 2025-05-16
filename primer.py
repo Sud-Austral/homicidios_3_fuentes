@@ -159,6 +159,38 @@ def funcion_global():
     pd.concat([df_historico,df_final]) .to_excel(r"homicidios/consolidado.xlsx", index=False)
 
 if __name__ == '__main__': 
-    funcion_global()  
+    #funcion_global()
+    url = "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales-ajax.php"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+        "Accept": "text/plain, */*; q=0.01",
+        "Accept-Language": "es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "Priority": "u=0",
+        "Referer": "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales.php"
+    }
+
+    data = {
+        "token": "0925705fa3d17cbda0e68869dc9fa1fa",
+        "numPagina": "1",
+        "atr01": "2023",
+        "atr02": "",
+        "atr03": ""
+    }
+    data["atr02"] = mes
+    data["atr01"] = anyo
+    print("PRE",datetime.datetime.now())
+    response = requests.post(url, headers=headers, data=data)
+    print("POST",datetime.datetime.now())
+    print(response.text)
+    df = pd.read_html(response.text)
+    df = df[1]
+    df["fuente"] = "Cifras oficiales y validadas por todas las instituciones"
+
+      
 
 
