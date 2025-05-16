@@ -182,7 +182,7 @@ if __name__ == '__main__':
         "atr03": ""
     }
     data["atr02"] = "Abril"
-    data["atr01"] = 2023
+    data["atr01"] = "2023"
     print("PRE",datetime.datetime.now())
     """
     response = requests.post(url, headers=headers, data=data)
