@@ -184,13 +184,14 @@ if __name__ == '__main__':
     data["atr02"] = mes
     data["atr01"] = anyo
     print("PRE",datetime.datetime.now())
+    """
     response = requests.post(url, headers=headers, data=data)
     print("POST",datetime.datetime.now())
     print(response.text)
     df = pd.read_html(response.text)
     df = df[1]
     df["fuente"] = "Cifras oficiales y validadas por todas las instituciones"
-
+    """
       
 
 
