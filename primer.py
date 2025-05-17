@@ -20,12 +20,12 @@ def dd_fiscalia():
     data = {
         "token": "61689f586d3ed3c5acbd1a30c964236e",
         "numPagina": "1",
-        "regPagina": "16",
+        "regPagina": "18",
         "atr01": "2025",
         "atr02": "Marzo",
         "atr03": ""
     }
-    for anyo in range(2025,2026):
+    for anyo in range(2018,2026):
         for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
             data2 = data.copy()
             data2["atr02"] = mes
@@ -53,7 +53,7 @@ def dd_policia():
     data = {
         "token": "202d8f3ba54058c848b7d7a6dbcf60bf",
         "numPagina": "1",
-        "regPagina": "16",
+        "regPagina": "18",
         "atr01": "2025",
         "atr02": "Febrero",
         "atr03": ""
@@ -84,13 +84,13 @@ def dd_cead():
     data = {
         "token": "ebfe6454c9acfbe42d3ac6f5c05ad5f4",
         "numPagina": "1",
-        "regPagina": "16",
+        "regPagina": "18",
         "atr01": "2024",
         "atr02": "Febrero",
         "atr03": ""
     }
 
-    for anyo in range(2025,2026):
+    for anyo in range(2018,2026):
         for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
             data2 = data.copy()
             data2["atr02"] = mes
@@ -155,43 +155,11 @@ def funcion_global():
     df_cead = consolidado_cead()
     df_final = pd.concat([df_policia,df_fiscalia,df_cead])
     df_final["actualizacion"] = datetime.datetime.now() 
-    df_historico =pd.read_excel(r"homicidios/consolidado.xlsx")
-    pd.concat([df_historico,df_final]) .to_excel(r"homicidios/consolidado.xlsx", index=False)
+    df_historico =pd.read_excel(r"homicidios/test.xlsx")
+    pd.concat([df_historico,df_final]) .to_excel(r"homicidios/test.xlsx", index=False)
 
 if __name__ == '__main__': 
-    #funcion_global()
-    url = "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales-ajax.php"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
-        "Accept": "text/plain, */*; q=0.01",
-        "Accept-Language": "es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3",
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "X-Requested-With": "XMLHttpRequest",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-origin",
-        "Priority": "u=0",
-        "Referer": "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales.php"
-    }
-
-    data = {
-        "token": "0925705fa3d17cbda0e68869dc9fa1fa",
-        "numPagina": "1",
-        "atr01": "2023",
-        "atr02": "",
-        "atr03": ""
-    }
-    data["atr02"] = "Abril"
-    data["atr01"] = "2023"
-    print("PRE",datetime.datetime.now())
-    """
-    response = requests.post(url, headers=headers, data=data)
-    print("POST",datetime.datetime.now())
-    print(response.text)
-    df = pd.read_html(response.text)
-    df = df[1]
-    df["fuente"] = "Cifras oficiales y validadas por todas las instituciones"
-    """
+    funcion_global()
       
 
 
