@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import os
 import datetime
+import proxy
 
 def dd_fiscalia():
     url = "https://homicidios.spd.gov.cl/homicidios/estadisticasMinisterio-ajax.php"
@@ -159,7 +160,9 @@ def funcion_global():
     pd.concat([df_historico,df_final]) .to_excel(r"homicidios/test.xlsx", index=False)
 
 if __name__ == '__main__': 
-    funcion_global()
+    #funcion_global()
+    proxy.llamada_proxy()
+
       
 
 
