@@ -167,8 +167,10 @@ def llamada_proxy(
         try:
             final_df = pd.concat(all_dataframes, ignore_index=True)
             #final_filename = os.path.join(output_directory, f"{output_directory}_Compilado_Total.csv")
-            final_filename = os.path.join("descarga", f"{output_directory}_Compilado_Total.csv")
-            final_df.to_csv(final_filename, index=False)
+            #final_filename = os.path.join("descarga", f"{output_directory}_Compilado_Total.csv")
+            final_filename = os.path.join("descarga", f"{output_directory}_Compilado_Total.xlsx")
+            #final_df.to_csv(final_filename, index=False)
+            final_df.to_xlsx(final_filename, index=False)
             print(f"Todos los datos han sido compilados y guardados en: {final_filename}")
         except Exception as e:
             print(f"Error al concatenar o guardar el DataFrame final: {e}")
