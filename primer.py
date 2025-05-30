@@ -76,17 +76,32 @@ def dd_cead():
         "atr02": "Febrero",
         "atr03": ""
     }
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="cead")
 
-    for anyo in range(2018,2026):
-        for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
-            data2 = data.copy()
-            data2["atr02"] = mes
-            data2["atr01"] = anyo
-            response = requests.post(url, headers=headers, data=data2)
-            df = pd.read_html(response.text)
-            df = df[1]
-            df["fuente"] = "CEAD"
-            df.to_csv(f"cead/cead_{data2['atr01']}_{data2['atr02']}.csv", index=False)
+def dd_nacional():
+    url = "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales-ajax.php"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+        "Accept": "text/plain, */*; q=0.01",
+        "Accept-Language": "es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "Priority": "u=0",
+        "Referer": "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales.php"
+    }
+
+    data = {
+        "token": "0925705fa3d17cbda0e68869dc9fa1fa",
+        "numPagina": "1",
+        "atr01": "2023",
+        "atr02": "",
+        "atr03": ""
+    }
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="nacional")
+    
 
 def consolidado_policia():
     ruta_carpeta = "policia"
@@ -149,6 +164,11 @@ if __name__ == '__main__':
     #funcion_global()
     dd_fiscalia()
     dd_policia()
+    dd_cead()
+    dd_nacional()
+    ruta = 'descarga'
+    archivos = [f for f in os.listdir(ruta) if os.path.isfile(os.path.join(ruta, f))]
+    print(archivos)
 
 
       
