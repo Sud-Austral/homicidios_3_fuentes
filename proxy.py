@@ -165,7 +165,7 @@ def llamada_proxy(
         print("\nConcatenando todos los datos recolectados...")
         try:
             final_df = pd.concat(all_dataframes, ignore_index=True)
-            final_filename = os.path.join(output_directory, "Fiscalia_Compilado_Total.csv")
+            final_filename = os.path.join(output_directory, f"{output_directory}_Compilado_Total.csv")
             final_df.to_csv(final_filename, index=False)
             print(f"Todos los datos han sido compilados y guardados en: {final_filename}")
         except Exception as e:

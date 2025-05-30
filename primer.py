@@ -26,16 +26,9 @@ def dd_fiscalia():
         "atr02": "Marzo",
         "atr03": ""
     }
-    for anyo in range(2018,2026):
-        for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
-            data2 = data.copy()
-            data2["atr02"] = mes
-            data2["atr01"] = anyo
-            response = requests.post(url, headers=headers, data=data2)
-            df = pd.read_html(response.text)
-            df = df[1]
-            df["fuente"] = "Ministerio Público, los cuales se extraen desde el sistema informático de apoyo a los Fiscales (SAF)"
-            df.to_csv(f"fiscalia/Fiscalia_{data2['atr01']}_{data2['atr02']}.csv", index=False)
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="fiscalia")
+    
+
 
 def dd_policia():
     url = "https://homicidios.spd.gov.cl/homicidios/estadisticasPoliciales-ajax.php"
@@ -59,14 +52,7 @@ def dd_policia():
         "atr02": "Febrero",
         "atr03": ""
     }
-    for i in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
-        data2 = data.copy()
-        data2["atr02"] = i
-        response = requests.post(url, headers=headers, data=data2)
-        df = pd.read_html(response.text)
-        df = df[1]
-        df["fuente"] = "Carabineros de Chile y la Policía de Investigaciones de Chile"
-        df.to_csv(f"policia/Policiales_{data2['atr01']}_{i}.csv", index=False)
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="policia")
 
 def dd_cead():
     url = "https://homicidios.spd.gov.cl/homicidios/estadisticasCead-ajax.php"
@@ -161,7 +147,9 @@ def funcion_global():
 
 if __name__ == '__main__': 
     #funcion_global()
-    proxy.llamada_proxy(output_directory="test")
+    dd_fiscalia()
+    dd_policia()
+
 
       
 
