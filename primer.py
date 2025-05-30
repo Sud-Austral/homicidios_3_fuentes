@@ -161,7 +161,7 @@ def funcion_global():
 
 if __name__ == '__main__': 
     #funcion_global()
-    proxy.llamada_proxy()
+    proxy.llamada_proxy(output_directory="test")
 
       
 

@@ -4,10 +4,35 @@ import pandas as pd
 import json # Necesario para enviar el payload al proxy
 import os
 import time # Para añadir un pequeño retraso
+import datetime
 
 
-def llamada_proxy():
+def llamada_proxy(
+        target_url_base = "https://homicidios.spd.gov.cl/homicidios/estadisticasMinisterio-ajax.php",
+        original_headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+            "Accept": "text/plain, */*; q=0.01",
+            "Accept-Language": "es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3",
+            # 'Content-Type' es importante y se pasa al proxy, que lo usará.
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "X-Requested-With": "XMLHttpRequest",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "Priority": "u=0", # Este header podría no ser estándar o necesario
+            "Referer": "https://homicidios.spd.gov.cl/homicidios/estadisticasMinisterio.php"
+        },
+        base_payload_data = {
+            "token": "61689f586d3ed3c5acbd1a30c964236e",
+            "numPagina": "1",
+            "regPagina": "1000", # Intentar obtener todos los registros de una vez
+            "atr01": "2025", # Año (se actualizará en el bucle)
+            "atr02": "Marzo", # Mes (se actualizará en el bucle)
+            "atr03": ""      # Parámetro desconocido, se mantiene vacío
+        },
+        output_directory = "fiscalia3",
 
+    ):
     # --- CONFIGURACIÓN DEL PROXY ---
     # ¡¡¡IMPORTANTE!!!
     # Reemplaza '<IP_DEL_PC_LOCAL>' con la dirección IP real de tu PC 
@@ -17,35 +42,16 @@ def llamada_proxy():
     # Si cambiaste el puerto en proxy_server.py, actualízalo aquí también.
 
     # URL de destino original y encabezados
-    target_url_base = "https://homicidios.spd.gov.cl/homicidios/estadisticasMinisterio-ajax.php"
-    original_headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-        "Accept": "text/plain, */*; q=0.01",
-        "Accept-Language": "es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3",
-        # 'Content-Type' es importante y se pasa al proxy, que lo usará.
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "X-Requested-With": "XMLHttpRequest",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-origin",
-        "Priority": "u=0", # Este header podría no ser estándar o necesario
-        "Referer": "https://homicidios.spd.gov.cl/homicidios/estadisticasMinisterio.php"
-    }
+    
+    
 
     # Datos base para el payload del formulario
     # El token "61689f586d3ed3c5acbd1a30c964236e" podría expirar o cambiar. 
     # Si el script deja de funcionar, verifica este token.
-    base_payload_data = {
-        "token": "61689f586d3ed3c5acbd1a30c964236e",
-        "numPagina": "1",
-        "regPagina": "1000", # Intentar obtener todos los registros de una vez
-        "atr01": "2025", # Año (se actualizará en el bucle)
-        "atr02": "Marzo", # Mes (se actualizará en el bucle)
-        "atr03": ""      # Parámetro desconocido, se mantiene vacío
-    }
+    
 
     # Directorio para guardar los archivos CSV
-    output_directory = "fiscalia3"
+    
     os.makedirs(output_directory, exist_ok=True)
 
     all_dataframes = [] # Lista para almacenar todos los DataFrames y luego concatenarlos
@@ -54,7 +60,8 @@ def llamada_proxy():
     # Bucle para años y meses
     # Ajusta el rango de años según necesites. Actualmente hasta 2024 (2025 es exclusivo).
     # El año 2025 podría no tener datos todavía.
-    for anyo in range(2018, 2025): 
+    max_year = datetime.datetime.now().year + 1
+    for anyo in range(2018, max_year): 
         for mes in ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]:
             
             current_payload_data = base_payload_data.copy()
