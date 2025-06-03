@@ -104,20 +104,9 @@ def dd_nacional():
     
 
 def consolidado_policia():
-    ruta_carpeta = "policia"
+    ruta = r"policia_Compilado_Total.xlsx"
 
-    # Listar todos los archivos
-    archivos = [f for f in os.listdir(ruta_carpeta) if os.path.isfile(os.path.join(ruta_carpeta, f))]
-
-    acumulador = []
-    for archivo in archivos:
-        df = pd.read_csv(f"policia/{archivo}")
-        acumulador.append(df.copy())
-
-    df = pd.concat(acumulador)
-    del df["Frecuencia 2024"]
-    df_policia = df.rename(columns={"Frecuencia 2025":"Frecuencia","Región":"Region"}).copy()
-    return df_policia
+    return None
 
 def consolidado_fiscalia():
     ruta_carpeta = "fiscalia"
@@ -168,6 +157,9 @@ if __name__ == '__main__':
     dd_nacional()
     ruta = 'descarga'
     archivos = [f for f in os.listdir(ruta) if os.path.isfile(os.path.join(ruta, f))]
+    for i in archivos:
+        df = pd.read_excel(f"descarga/{i}")
+        print(i,df.columns) 
     print(archivos)
 
 
