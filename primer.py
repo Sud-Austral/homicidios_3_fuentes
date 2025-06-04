@@ -105,37 +105,43 @@ def dd_nacional():
 
 def consolidado_policia():
     ruta = r"policia_Compilado_Total.xlsx"
-
-    return None
+    df = pd.read_excel(f"descarga/{ruta}")
+    df = df[['Año', 'Mes', 'Región','fuente','Frecuencia 2025']]
+    df.columns = ["Año","Mes","Region","fuente","Frecuencia"]
+    #df.to_excel(f"descarga2/{ruta}", index=False)
+    return df
 
 def consolidado_fiscalia():
-    ruta_carpeta = "fiscalia"
-
-    # Listar todos los archivos
-    archivos = [f for f in os.listdir(ruta_carpeta) if os.path.isfile(os.path.join(ruta_carpeta, f))]
-
-    acumulador = []
-    for archivo in archivos:
-        df = pd.read_csv(f"fiscalia/{archivo}")
-        acumulador.append(df.copy())
-
-    df = pd.concat(acumulador)
-    df_fiscalia = df.copy()
-    return df_fiscalia
+    ruta = r"fiscalia_Compilado_Total.xlsx"
+    df = pd.read_excel(f"descarga/{ruta}")
+    df = df[['Año', 'Mes', 'Region', 'Frecuencia', 'fuente']]
+    #df.columns = ["Año","Mes","Region","fuente","Frecuencia"]
+    #df.to_excel(f"descarga2/{ruta}", index=False)
+    return df
 
 def consolidado_cead():
-    ruta_carpeta = "cead"
-    # Listar todos los archivos
-    archivos = [f for f in os.listdir(ruta_carpeta) if os.path.isfile(os.path.join(ruta_carpeta, f))]
+    ruta = r"cead_Compilado_Total.xlsx"
+    df = pd.read_excel(f"descarga/{ruta}")
+    df = df[['Año', 'Mes', 'Region', 'Frecuencia', 'fuente']]
+    #df.columns = ["Año","Mes","Region","fuente","Frecuencia"]
+    #df.to_excel(f"descarga2/{ruta}", index=False)
+    return df
 
-    acumulador = []
-    for archivo in archivos:
-        df = pd.read_csv(f"cead/{archivo}")
-        acumulador.append(df.copy())
+def consolidado_nacional():
+    ruta = r"nacional_Compilado_Total.xlsx"
+    df = pd.read_excel(f"descarga/{ruta}")
+    df = df[['Año', 'Mes', 'Region', 'Frecuencia', 'fuente']]
+    #df.columns = ["Año","Mes","Region","fuente","Frecuencia"]
+    #df.to_excel(f"descarga2/{ruta}", index=False)
+    return df
 
-    df = pd.concat(acumulador)
-    df_cead = df.copy()
-    return df_cead
+def consolidado_stop():
+    ruta = r"stop.xlsx"
+    df = pd.read_excel(f"descarga/{ruta}")
+    df = df[['Año', 'Mes', 'Region', 'Frecuencia', 'fuente']]
+    #df.columns = ["Año","Mes","Region","fuente","Frecuencia"]
+    #df.to_excel(f"descarga2/{ruta}", index=False)
+    return df
 
 def funcion_global():
     dd_fiscalia()
@@ -150,17 +156,23 @@ def funcion_global():
     pd.concat([df_historico,df_final]) .to_excel(r"homicidios/test.xlsx", index=False)
 
 if __name__ == '__main__': 
-    #funcion_global()
     dd_fiscalia()
     dd_policia()
     dd_cead()
     dd_nacional()
-    ruta = 'descarga'
-    archivos = [f for f in os.listdir(ruta) if os.path.isfile(os.path.join(ruta, f))]
-    for i in archivos:
-        df = pd.read_excel(f"descarga/{i}")
-        print(i,df.columns) 
-    print(archivos)
+    df_policia = consolidado_policia()
+    df_fiscalia = consolidado_fiscalia()
+    df_cead = consolidado_cead()
+    df_nacional = consolidado_nacional()
+    df_stop = consolidado_stop()
+    df_final = pd.concat([df_policia,df_fiscalia,df_cead,df_nacional,df_stop])
+    df_final["actualizacion"] = datetime.datetime.now() 
+    df_final.to_excel(r"test1.xlsx", index=False)
+    historico = pd.read_excel("https://raw.githubusercontent.com/Sud-Austral/homicidios_3_fuentes/refs/heads/main/homicidios/consolidado_homicidios_historico.xlsx")
+
+    pd.concat([historico,df_final]).to_excel(r"test2.xlsx", index=False)
+
+    
 
 
       
