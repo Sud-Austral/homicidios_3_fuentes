@@ -26,7 +26,7 @@ def dd_fiscalia():
         "atr02": "Marzo",
         "atr03": ""
     }
-    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="fiscalia")
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="fiscalia",fuente="Ministerio Público, los cuales se extraen desde el sistema informático de apoyo a los Fiscales (SAF)")
     
 
 
@@ -52,7 +52,7 @@ def dd_policia():
         "atr02": "Febrero",
         "atr03": ""
     }
-    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="policia")
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="policia", fuente="Carabineros de Chile y la Policía de Investigaciones de Chile")
 
 def dd_cead():
     url = "https://homicidios.spd.gov.cl/homicidios/estadisticasCead-ajax.php"
@@ -76,7 +76,7 @@ def dd_cead():
         "atr02": "Febrero",
         "atr03": ""
     }
-    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="cead")
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="cead", fuente="CEAD")
 
 def dd_nacional():
     url = "https://homicidios.spd.gov.cl/homicidios/cifrasOficiales-ajax.php"
@@ -100,7 +100,7 @@ def dd_nacional():
         "atr02": "",
         "atr03": ""
     }
-    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="nacional")
+    proxy.llamada_proxy(target_url_base=url,original_headers=headers,base_payload_data=data,output_directory="nacional", fuente="Cifras oficiales y validadas por todas las instituciones")
     
 
 def consolidado_policia():

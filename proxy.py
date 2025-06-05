@@ -31,6 +31,7 @@ def llamada_proxy(
             "atr03": ""      # Parámetro desconocido, se mantiene vacío
         },
         output_directory = "fiscalia3",
+        fuente = "Ministerio Público, los cuales se extraen desde el sistema informático de apoyo a los Fiscales (SAF)"
 
     ):
     # --- CONFIGURACIÓN DEL PROXY ---
@@ -121,7 +122,7 @@ def llamada_proxy(
                         continue
                     
                     # Añadir columnas adicionales
-                    df["fuente"] = "Ministerio Público, los cuales se extraen desde el sistema informático de apoyo a los Fiscales (SAF)"
+                    df["fuente"] = fuente
                     df["AñoConsulta"] = anyo
                     df["MesConsulta"] = mes
                     
