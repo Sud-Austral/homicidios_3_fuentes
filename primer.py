@@ -171,6 +171,7 @@ if __name__ == '__main__':
     historico = pd.read_excel("https://raw.githubusercontent.com/Sud-Austral/homicidios_3_fuentes/refs/heads/main/homicidios/consolidado_homicidios_historico.xlsx")
 
     pd.concat([historico,df_final]).to_excel(r"test2.xlsx", index=False)
+    print("Cerrado y guardado")
 
     
 
