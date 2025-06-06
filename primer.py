@@ -167,10 +167,10 @@ if __name__ == '__main__':
     df_stop = consolidado_stop()
     df_final = pd.concat([df_policia,df_fiscalia,df_cead,df_nacional,df_stop])
     df_final["actualizacion"] = datetime.datetime.now() 
-    df_final.to_excel(r"test1.xlsx", index=False)
+    df_final.to_excel(r"homicidios/consolidado_homicidios.xlsx", index=False)
     historico = pd.read_excel("https://raw.githubusercontent.com/Sud-Austral/homicidios_3_fuentes/refs/heads/main/homicidios/consolidado_homicidios_historico.xlsx")
 
-    pd.concat([historico,df_final]).to_excel(r"test2.xlsx", index=False)
+    pd.concat([historico,df_final]).to_excel(r"homicidios/consolidado_homicidios_historico.xlsx", index=False)
     print("Cerrado y guardado")
 
     
